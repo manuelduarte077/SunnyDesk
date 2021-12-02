@@ -1,22 +1,18 @@
 
+
 import androidx.compose.desktop.Window
-import androidx.compose.material.Text
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
 import androidx.compose.ui.unit.IntSize
-import kotlinx.coroutines.launch
 
-private const val API_KEY = ""
+const val API_KEY = "9f1ad3d2cda545c281264554210212"
 
-fun main() = Window {
-  var text by remember { mutableStateOf("Hello, World!") }
+fun main() = Window(
+  title = "Sunny Desk",
+  size = IntSize(800, 700),
+) {
+  val repository = Repository(API_KEY)
 
   MaterialTheme {
-    Button(onClick = {
-      text = "Hello, Desktop!"
-    }) {
-      Text(text)
-    }
+    WeatherScreen(repository)
   }
 }
