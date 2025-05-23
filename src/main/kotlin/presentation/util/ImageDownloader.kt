@@ -7,7 +7,6 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import org.jetbrains.skia.Image
-import java.io.ByteArrayInputStream
 import javax.imageio.ImageIO
 
 object ImageDownloader {
