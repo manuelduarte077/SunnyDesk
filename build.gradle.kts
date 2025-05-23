@@ -15,6 +15,7 @@ repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
+
 }
 
 dependencies {
@@ -31,7 +32,13 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.13")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
 
+    // PreCompose para Compose Desktop
+    implementation("moe.tlaster:precompose:1.5.7")
+    implementation("moe.tlaster:precompose-viewmodel:1.5.7")
+    implementation("moe.tlaster:precompose-koin:1.5.7")
 
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 }
 
 compose.desktop {

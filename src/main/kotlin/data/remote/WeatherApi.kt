@@ -1,3 +1,6 @@
+package data.remote
+
+import data.remote.dto.WeatherResponse
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -8,25 +11,25 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
-class Repository(
+class WeatherApi(
     private val apiKey: String,
-    private val client: HttpClient = defaultHttpClient,
+    private val client: HttpClient = defaultHttpClient
 ) {
-    private val transformer = WeatherTransformer()
     private val json = Json { ignoreUnknownKeys = true }
+    private val baseUrl = "https://api.weatherapi.com/v1"
 
-    private suspend fun getWeatherForCity(city: String): WeatherResponse {
+    suspend fun getWeatherForCity(city: String): WeatherResponse {
         val response = client.get(
-            "https://api.weatherapi.com/v1/forecast.json" +
+            "$baseUrl/forecast.json" +
                     "?key=$apiKey" +
                     "&q=$city" +
                     "&days=5" +
                     "&aqi=no" +
                     "&alerts=no"
         )
-        
+
         val responseText = response.bodyAsText()
-        
+
         // Check if the response contains an error
         if (responseText.contains("\"error\":")) {
             val jsonElement = json.parseToJsonElement(responseText)
@@ -35,19 +38,8 @@ class Repository(
                 ?: "Unknown API error"
             throw Exception("API Error: $errorMessage")
         }
-        
-        return json.decodeFromString<WeatherResponse>(responseText)
-    }
 
-    suspend fun weatherForCity(city: String): Lce<WeatherResults> {
-        return try {
-            val result = getWeatherForCity(city)
-            val content = transformer.transform(result)
-            Lce.Content(content)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Lce.Error(e)
-        }
+        return json.decodeFromString<WeatherResponse>(responseText)
     }
 
     companion object {
