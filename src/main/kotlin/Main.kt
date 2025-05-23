@@ -1,16 +1,23 @@
-import androidx.compose.desktop.Window
-import androidx.compose.material.MaterialTheme
-import androidx.compose.ui.unit.IntSize
+import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
 
-const val API_KEY = ""
+const val API_KEY = "b583b32d2e564eee82d93301252305"
 
-fun main() = Window(
-    title = "Sunny Desk (KT)",
-    size = IntSize(800, 700),
-) {
+@Composable
+@Preview
+fun App() {
     val repository = Repository(API_KEY)
 
     MaterialTheme {
         WeatherScreen(repository)
+    }
+}
+
+fun main() = application {
+    Window(onCloseRequest = ::exitApplication) {
+        App()
     }
 }
