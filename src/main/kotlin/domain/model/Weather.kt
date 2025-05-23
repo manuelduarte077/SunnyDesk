@@ -1,4 +1,6 @@
-data class WeatherCard(
+package domain.model
+
+data class Weather(
     val condition: String,
     val iconUrl: String,
     val temperature: Double,
@@ -6,7 +8,7 @@ data class WeatherCard(
     val chanceOfRain: Double? = null,
 )
 
-data class WeatherResults(
-    val currentWeather: WeatherCard,
-    val forecast: List<WeatherCard>,
+data class WeatherInfo(
+    val currentWeather: Weather,
+    val forecast: List<Weather>,
 )
